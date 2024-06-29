@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useLocalSearchParams } from 'expo-router';
+import { Link, useLocalSearchParams } from 'expo-router';
 
 export default function DetailsScreen() {
 
@@ -19,6 +19,16 @@ export default function DetailsScreen() {
             })
     }, [])
 
+    const handleDelete = ()=>{
+        axios.delete("https://moviesapi-cm0p.onrender.com/movie/" + id)
+        .then(() => {
+            console.log("Deleted");
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
     return (
         <View >
             <View style={styles.container}>
@@ -33,8 +43,10 @@ export default function DetailsScreen() {
             </View>
 
             <View style={styles.container1}>
-                <Button title='Edit' />
-                <Button title='Delete' />
+                <Link href={`/Edit/${movie._id}`}>
+                    <Button title='Edit' />
+                </Link>
+                <Button title='Delete' onPress={handleDelete} />
             </View>
         </View>
     )
@@ -57,11 +69,11 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         borderRadius: 10
     },
-    container1:{
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
-        flexDirection:'row',
-        gap:4,
+    container1: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        gap: 4,
     }
 });
