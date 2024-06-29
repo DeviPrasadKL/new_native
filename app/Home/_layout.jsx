@@ -10,6 +10,7 @@ export default function Layout() {
     axios.get("https://moviesapi-cm0p.onrender.com/movies")
       .then((res) => {
         setData(res.data);
+        console.log("Fetched");
       })
       .catch((err) => {
         console.log(err);
